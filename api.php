@@ -3,6 +3,22 @@
     //this is the basic way of getting a database handler from PDO, PHP's built in quasi-ORM
     $dbhandle = new PDO("sqlite:scrabble.sqlite") or die("Failed to open DB");
     if (!$dbhandle) die ($error);
+
+    if ($verb == "GET"){
+        echo "GET HERE";
+    } else if ($verb == "POST"){
+        $author = "anonymous";
+        $content = "secret message";
+        if (isset($_POST["author"])){
+            $author = $_POST["author"];
+        }
+        if (isset($_POST["content"])){
+            $content = $_POST["content"];
+        }
+        echo "$author: $content";
+    } else {
+        echo "USAGE GET or POST";
+    }
  
     //this is a sample query which gets some data, the order by part shuffles the results
     //the limit 0, 10 takes the first 10 results.
@@ -28,5 +44,10 @@
     header('Content-Type: application/json');
     //this creates json and gives it back to the browser
     echo json_encode($results);
+
+    $verb = $_SERVER["REQUEST_METHOD"];
+
+  
+    
 
 ?>
